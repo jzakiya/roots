@@ -11,7 +11,7 @@ Gem::Specification.new do |gem|
 
   gem.summary       = %q{two methods 'root' and 'roots' to compute all n roots of real/complex numbers}
   gem.description   = %q{For val (real/complex) and root n: val.root(n,[1-n]) and val.roots(n, [opt]) }
-  gem.homepage      = ""https://github.com/jzakiya/roots"
+  gem.homepage      = "https://github.com/jzakiya/roots"
 
   gem.files         = ["lib/roots.rb"]
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
