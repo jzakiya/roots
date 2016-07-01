@@ -47,7 +47,36 @@ For Ruby 1.9.x can also use symbol as option: 384.roots 4,:r
 Can ask: How many complex roots of x: x.roots(n,'c').size
 What's the 3rd 5th root of (4+9i): Complex(4,9).root(5,3)
 
+Use syntax:  Roots.digits_to_show
+With gem version 1.1.0 this method was added to allow users to set
+and see the number of decimal digits displayed. If no input is
+given, the number of digits previously set is shown. The default
+value is 8. Providing an input value sets the number of digits to
+display. An input value < 1 will be set to a value of 1, to
+display at least one decimal digit. An input greater than the
+maximum digits shown for a given Ruby will display that maximum
+
+Roots.digits_to_show => 8
+
+10.root 5 => 1.58489319
+
+Roots.digits_to_show 11 => 11
+
+10.root 5 => 1.58489319246
+
+Roots.digits_to_show 16 => 16
+
+10.root 5 => 1.5848931924611136
+
+Roots.digits_to_show 17 => 17
+
+10.root 5 => 1.5848931924611136
+
+Roots.digits_to_show 0 => 1
+
+10.root 5 => 1.6
 ---------------
+
 Mathematical Foundations
 
 For complex number (x+iy) = a*e^(i*arg) = a*[cos(arg) + i*sin(arg)]
@@ -91,8 +120,8 @@ module Roots
     mag = abs**n**-1 ; theta = arg/n ; delta = 2*PI/n
     return rootn(mag,theta,delta,k>1 ? k-1:0) if kind_of?(Complex)
     return rootn(mag,theta,delta,k-1) if k>0 # kth root of n for any real
-    return  mag if self > 0    # pos real default
-    return -mag if n&1 == 1    # neg real default, n odd
+    return  mag.round(Roots.digits_to_show) if self > 0 # pos real default
+    return -mag.round(Roots.digits_to_show) if n&1 == 1 # neg real default, n odd
     return rootn(mag,theta)    # neg real default, n even, 1st ccw root
   end
 
@@ -123,12 +152,16 @@ module Roots
   # Alias sin|cos to fix C lib errors to get 0.0 values for X|Y axis angles.
   def sine(x);   cos(x).abs == 1 ? 0 : sin(x) end
   def cosine(x); sin(x).abs == 1 ? 0 : cos(x) end
+  def self.digits_to_show(n = @digits_to_show || 8)
+    @digits_to_show = n < 1 ? 1 : n 
+  end
 
   def rootn(mag,theta,delta=0,k=0) # root k of n of real|complex
     angle_n = theta + k*delta
-    mag*Complex(cosine(angle_n),sine(angle_n))
+    x = mag*Complex(cosine(angle_n),sine(angle_n))
+    Complex(x.real.round(Roots.digits_to_show), x.imag.round(Roots.digits_to_show))
   end
 end
 
-# Mixin 'root' and 'roots' as methods for all number classes..
+# Mixin 'root' and 'roots' as methods for all number classes.
 class Numeric; include Roots end

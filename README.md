@@ -42,10 +42,10 @@ for -val => first ccw complex root    when n is even
 
 9.root(2) => 3.0
 -32.root(5,3) => (-2.0+0.0i)
-73.root 6 => 2.044343218831229
-73.root 6,1 => (2.044343218831229+0.0i)
-(-100.43).root 6,6 => (1.8671299361124354-1.0779879712265246i)
-Complex(3,19).root 7,4 => (-1.4793916060223173+0.37266672915983323i)
+73.root 6 => 2.04434322
+73.root 6,1 => (2.04434322+0.0i)
+(-100.43).root 6,6 => (1.86712994-1.07798797i)
+Complex(3,19).root 7,4 => (-1.47939161+0.37266673i)
 ```
 
 **roots**
@@ -66,9 +66,43 @@ For Ruby >= 1.9 can also use a symbol as option: 384.roots 4,:r
 
 Can ask: How many complex roots of x: x.roots(n,'c').size
 What's the 3rd 5th root of (4+9i): Complex(4,9).root(5,3)
+
+8.roots 3 => [(2.0+0.0i), (-1.0+1.73205081i), (-1.0-1.73205081i)]
 ```
 
-**Mathematical Foundations**
+**Roots.digits_to_show**
+```
+With version 1.1.0 this method was added to allow users to set
+and see the number of decimal digits displayed. If no input is
+given, the number of digits previously set is shown. The default
+value is 8. Providing an input value sets the number of digits to
+display. An input value < 1 will be set to a value of 1, to
+display at least one decimal digit. An input greater than the
+maximum digits shown for a given Ruby will display that maximum.
+
+
+Roots.digits_to_show => 8
+
+10.root 5 => 1.58489319
+
+Roots.digits_to_show 11 => 11
+
+10.root 5 => 1.58489319246
+
+Roots.digits_to_show 16 => 16
+
+10.root 5 => 1.5848931924611136
+
+Roots.digits_to_show 17 => 17
+
+10.root 5 => 1.5848931924611136
+
+Roots.digits_to_show 0 => 1
+
+10.root 5 => 1.6
+```
+
+## Mathematical Foundations
 
 ```
 For complex number (x+iy) = a*e^(i*arg) = a*[cos(arg) + i*sin(arg)]
