@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["jzakiya@gmail.com"]
 
   gem.summary       = %q{two methods 'root' and 'roots' to compute all n roots of real/complex numbers}
-  gem.description   = %q{For val (real/complex) and root n: val.root(n,[1-n]) and val.roots(n, [opt]) }
+  gem.description   = %q{For val (real/complex) and root n: val.root(n,[1-n]) and val.roots(n, [opt]); Roots.digits_to_show to see/change number of digts to show}
   gem.homepage      = "https://github.com/jzakiya/roots"
 
   gem.files         = ["lib/roots.rb"]
@@ -19,7 +19,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   
   gem.license       = "GPLv2+"
-  gem.required_ruby_version = ">= 1.8.7"
+  gem.required_ruby_version = ">= 1.9"
   
   gem.add_development_dependency "bundler", "~> 1.9"
   gem.add_development_dependency "rake", "~> 10.0"
