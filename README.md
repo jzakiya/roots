@@ -219,7 +219,7 @@ For 125 = 0b1111101, b = 7, and its cuberoot has at most (7/3 + 1) = 3 bits.
 The cuberoot of 125 is 5 = 0b101, which is 3 bits.
 
 Algorithm:
-           bits_shift = (num.bit_length)/n + 1  # determine max number of root bits
+           bits_shift = (num.bit_length)/n + 1   # determine max number of root bits
            bitn_mask = 1 << bits_shift           # set value for max bit position of root
            root = 0                              # initialize the value for root
            until bitn_mask == 0                  # step through all the bit positions for root
