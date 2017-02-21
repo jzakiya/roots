@@ -105,6 +105,32 @@ These all should be 0.0, which causes incorrect root values there.
 I 'fix' these errors by setting aliases of sin|cos to 0.0 if the
 absolute value of the other function equals 1.0 so they produce
 the correct root values.
+
+Added: 2017-2-20
+
+Module 'IntRoots' provides the two methods 'iroot2' and 'irootn(n)'
+to find the real squareroot and nth roots of arbitrary sized integers.
+
+Use syntax:  ival.iroot2
+Return the largest Integer +root+ value such that root**2 <= ival
+A negative ival will result in 'nil' being returned.
+
+9.iroot2  => 3
+-9.iroot2 => nil
+
+120.iroot2 => 10
+121.iroot2 => 11
+
+Use syntax:  ival.irootn(n), where n is an Integer > 1
+Return the largest Integer +root+ value such that root**n <= ival
+A negative ival for an even n value will result in 'nil' being returned.
+
+81.irootn(2) => 9
+81.irootn(3) => 4
+81.irootn(4) => 3
+
+-81.irootn(3) => -4
+-81.irootn(4) => nil
 =end
 
 # file roots.rb
@@ -161,7 +187,26 @@ module Roots
     x = mag*Complex(cosine(angle_n),sine(angle_n))
     Complex(x.real.round(Roots.digits_to_show), x.imag.round(Roots.digits_to_show))
   end
-end
-
+end  
+  
 # Mixin 'root' and 'roots' as methods for all number classes.
 class Numeric; include Roots end
+
+module IntRoots
+  def irootn(n)
+    return nil if self < 0 && n.even?
+    raise "root n is < 2 or not an Integer" unless n.is_a?(Integer) && n > 1
+    num  = self.abs
+    root, bitn_mask = 0, 1 << (num.bit_length/n + 2)
+    until (bitn_mask >>= 1) == 0
+      root |= bitn_mask
+      root ^= bitn_mask if root**n > num
+    end
+    root *= (self < 0 ? -1 : 1)
+  end
+
+  def iroot2; irootn(2) end
+end
+
+# Mixin 'iroot2' and 'irootn(n)' methods for class Integer
+class Integer; include IntRoots end
