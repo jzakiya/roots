@@ -224,7 +224,7 @@ Algorithm:
            root = 0                              # initialize the value for root
            until bitn_mask == 0                  # step through all the bit positions for root
              root |= bitn_mask                   # set current bit position to '1' in root
-             root ^= bitn_mask if root**2 > num  # set it back to '0' if root too large
+             root ^= bitn_mask if root**n > num  # set it back to '0' if root too large
              bitn_mask >>= 1                     # set bitn_mask to next smaller bit position
            end
            root                                  # return exact integer value for root
