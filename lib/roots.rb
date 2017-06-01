@@ -188,7 +188,7 @@ module Roots
     Complex(x.real.round(Roots.digits_to_show), x.imag.round(Roots.digits_to_show))
   end
 end  
-  
+
 # Mixin 'root' and 'roots' as methods for all number classes.
 class Numeric; include Roots end
 
@@ -197,15 +197,25 @@ module IntRoots
     return nil if self < 0 && n.even?
     raise "root n is < 2 or not an Integer" unless n.is_a?(Integer) && n > 1
     num  = self.abs
-    root, bitn_mask = 0, 1 << (num.bit_length/n + 2)
-    until (bitn_mask >>= 1) == 0
+    root = bitn_mask = 1 << b = (num.bit_length - 1)/n
+    numb = 1 << b*n    # make initial numb = root**n >= num
+    until ((bitn_mask >>= 1) == 0) || numb == num
       root |= bitn_mask
-      root ^= bitn_mask if root**n > num
+      root ^= bitn_mask if (numb = root**n) > num
     end
     root *= (self < 0 ? -1 : 1)
   end
 
-  def iroot2; irootn(2) end
+  alias iroot irootn  # to provide more syntactic choice
+
+  def iroot2       # Newton's method version used in Ruby for Integer#sqrt
+    return nil if (n = self) < 0
+    return n if n < 2
+    b = n.bit_length
+    x = 1 << (b-1)/2 | n >> (b/2 + 1)    # optimum initial root estimate
+    while (t = n / x) < x; x = ((x + t) >> 1) end
+    x
+  end
 end
 
 # Mixin 'iroot2' and 'irootn(n)' methods for class Integer

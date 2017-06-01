@@ -30,9 +30,10 @@ Then require as:
     
 ## Description
 
-Starting with Roots 2.0.0 (2017-2-21) the methods **iroot2** and **irootn** were added.
-They are instance_methods of **class Integer** that will accurately compute the exact real value 
-squareroot and nth_root for arbitrary sized integers.
+Starting with Roots 2.0.0 (2017-2-21) the methods **iroot2** and **irootn** were added (with
+**iroot** added as an alias to **irootn** 2017-6-1). With 2.1.0 **iroot2** uses optimized Newton's
+method. They are instance_methods of **class Integer** that will accurately compute the exact real
+value squareroot and nth_root for arbitrary sized integers.
 
 If you have an application where you need the exact correct integer real value for roots,
 especially for arbitrary sized (large) integers, use these methods instead of **root|s**.
@@ -78,27 +79,27 @@ A negative ival will result in 'nil' being returned.
 (10**111).roots(2)[0] => 3.1622776601683795e+55+0.0i
 ```
 
-**irootn**
+**irootn or iroot**
 ```
-Use syntax:  ival.irootn(n), where n is an Integer > 1
+Use syntax:  ival.irootn(n) or ival.iroot(n), where n is an Integer > 1
 Return the largest Integer +root+ of Integer ival such that root**n <= ival
 A negative ival for an even root n will result in 'nil' being returned.
 
 81.irootn(2) => 9
-81.irootn(3) => 4
-81.irootn(4) => 3
-81.irootn(4).class => Integer
+81.irootn 3 => 4
+81.iroot 4 => 3
+81.iroot(4).class => Integer
 
 -81.irootn(3) => -4
 -81.irootn(4) => nil
 
 100.irootn 4.5 => RuntimeError: root n is < 2 or not an Integer
-100.irootn -2  => RuntimeError: root n is < 2 or not an Integer
+100.iroot -2   => RuntimeError: root n is < 2 or not an Integer
 
-(10**110).irootn(2) => 10000000000000000000000000000000000000000000000000000000 
+(10**110).iroot(2)  => 10000000000000000000000000000000000000000000000000000000 
 (10**110).irootn(3) => 4641588833612778892410076350919446576 
-(10**110).irootn(4) => 3162277660168379331998893544 
-(10**110).irootn(5) => 10000000000000000000000 
+(10**110).iroot 4   => 3162277660168379331998893544 
+(10**110).iroot(5)  => 10000000000000000000000 
 (10**110).irootn(6) => 2154434690031883721 
 (10**110).irootn(7) => 5179474679231211 
 (10**110).irootn(8) => 56234132519034 
