@@ -193,26 +193,25 @@ end
 class Numeric; include Roots end
 
 module IntRoots
-  def irootn(n)
+  def irootn(n)   # Newton's method for nth root
     return nil if self < 0 && n.even?
     raise "root n is < 2 or not an Integer" unless n.is_a?(Integer) && n > 1
-    num  = self.abs
-    root = bitn_mask = 1 << b = (num.bit_length - 1)/n
-    numb = 1 << b*n    # make initial numb = root**n >= num
-    until ((bitn_mask >>= 1) == 0) || numb == num
-      root |= bitn_mask
-      root ^= bitn_mask if (numb = root**n) > num
+    return self if self == 0 || (self == -1 && n.odd?)
+    num = self.abs
+    e, x = n-1, 1 << (num.bit_length-1)/n + 1
+    while (t = (e * x + num / x ** e)/n) < x
+      x = t
     end
-    root *= (self < 0 ? -1 : 1)
+    x *= self < 0 ? -1 : 1
   end
-
+  
   alias iroot irootn  # to provide more syntactic choice
 
   def iroot2       # Newton's method version used in Ruby for Integer#sqrt
     return nil if (n = self) < 0
     return n if n < 2
     b = n.bit_length
-    x = 1 << (b-1)/2 | n >> (b/2 + 1)    # optimum initial root estimate
+    x = 1 << (b-1)/2 | n >> (b/2 + 1)    # optimum initial root estimat
     while (t = n / x) < x; x = ((x + t) >> 1) end
     x
   end

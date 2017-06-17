@@ -27,13 +27,13 @@ Or install it yourself as:
 Then require as:
 
     require 'roots'
-    
+
 ## Description
 
 Starting with Roots 2.0.0 (2017-2-21) the methods **iroot2** and **irootn** were added (with
 **iroot** added as an alias to **irootn** 2017-6-1). With 2.1.0 **iroot2** uses optimized Newton's
-method. They are instance_methods of **class Integer** that will accurately compute the exact real
-value squareroot and nth_root for arbitrary sized integers.
+method. With 2.2.0 (2017-6-17) **iroot|n** uses optimized Newton's method for any nth root. All are instance_methods 
+of **class Integer** and accurately compute the exact real value square|nth roots for arbitrary sized integers.
 
 If you have an application where you need the exact correct integer real value for roots,
 especially for arbitrary sized (large) integers, use these methods instead of **root|s**.
@@ -96,21 +96,21 @@ A negative ival for an even root n will result in 'nil' being returned.
 100.irootn 4.5 => RuntimeError: root n is < 2 or not an Integer
 100.iroot -2   => RuntimeError: root n is < 2 or not an Integer
 
-(10**110).iroot(2)  => 10000000000000000000000000000000000000000000000000000000 
-(10**110).irootn(3) => 4641588833612778892410076350919446576 
-(10**110).iroot 4   => 3162277660168379331998893544 
-(10**110).iroot(5)  => 10000000000000000000000 
-(10**110).irootn(6) => 2154434690031883721 
-(10**110).irootn(7) => 5179474679231211 
-(10**110).irootn(8) => 56234132519034 
-(10**110).irootn(9) => 1668100537200 
+(10**110).iroot(2)  => 10000000000000000000000000000000000000000000000000000000
+(10**110).irootn(3) => 4641588833612778892410076350919446576
+(10**110).iroot 4   => 3162277660168379331998893544
+(10**110).iroot(5)  => 10000000000000000000000
+(10**110).irootn(6) => 2154434690031883721
+(10**110).irootn(7) => 5179474679231211
+(10**110).irootn(8) => 56234132519034
+(10**110).irootn(9) => 1668100537200
 (10**110).irootn 10 => 100000000000
 ```
 
 **root**
 ```
 Use syntax:  val.root(n,{k})
-root(n,k=0) n is root 1/n exponent,  integer > 0 
+root(n,k=0) n is root 1/n exponent,  integer > 0
             k is nth ccw root 1..n , integer >=0
 If k not given default root returned, which are:
 for +val => real root  |val**(1.0/n)|
@@ -229,6 +229,10 @@ Algorithm:
              bitn_mask >>= 1                     # set bitn_mask to next smaller bit position
            end
            root                                  # return exact integer value for root
+
+Starting with 2.1.0 used Newton's method for squareroots instead of bbm.
+Starting with 2.2.0 used Newton's method for general nth roots instead of bbm.
+https://en.wikipedia.org/wiki/Nth_root_algorithm
 ```
 ## Author
 Jabari Zakiya
