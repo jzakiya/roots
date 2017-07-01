@@ -2,13 +2,15 @@
 
 ## Introduction
 
-This gem provides two methods `root` and `roots` which will find all the nth roots of real and complex values.
+This gem originally provided two methods `root` and `roots` to find all the nth roots of real and complex values.
 
-For details on the mathematical foundation and implementation details see my paper:
+For details on their mathematical foundation and implementation details see my paper:
 
 `Roots in Ruby`
 
 https://www.scribd.com/doc/60067570/Roots-in-Ruby
+
+In 2017 I added the methods `iroot2` and `iroot`|`irootn` to find the integer roots for arbitrary sized integers.
 
 ## Installation
 
@@ -103,8 +105,8 @@ A negative ival for an even root n will result in 'nil' being returned.
 (10**110).irootn(6) => 2154434690031883721
 (10**110).irootn(7) => 5179474679231211
 (10**110).irootn(8) => 56234132519034
-(10**110).irootn(9) => 1668100537200
-(10**110).irootn 10 => 100000000000
+(10**110).iroot(9)  => 1668100537200
+(10**110).iroot 10  => 100000000000
 ```
 
 **root**
@@ -230,8 +232,8 @@ Algorithm:
            end
            root                                  # return exact integer value for root
 
-Starting with 2.1.0 used Newton's method for squareroots instead of bbm.
-Starting with 2.2.0 used Newton's method for general nth roots instead of bbm.
+Starting with 2.1.0 Newton's method for squareroots is used instead of bbm.
+Starting with 2.2.0 Newton's method for general nth roots is used instead of bbm.
 https://en.wikipedia.org/wiki/Nth_root_algorithm
 ```
 ## Author
