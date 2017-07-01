@@ -240,4 +240,4 @@ https://en.wikipedia.org/wiki/Nth_root_algorithm
 Jabari Zakiya
 
 ## License
-GPLv2+
+GPL-2.0+
